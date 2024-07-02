@@ -10,7 +10,7 @@ const Products = () => {
     }, [])
 
     const getProductsData = async () => {
-        const { data } = await axios.get('https://fakestoreapi.com/products/{id}')
+        const { data } = await axios.get('https://fakestoreapi.com/products')
         setProducts(data)
     }
 
@@ -18,22 +18,27 @@ const Products = () => {
     return (
         <div>
             <h2>Products</h2>
-            {
-                products && products.length > 0 ? (
-                    <div className='row'>
-                        {products.map((product) => (
-                            <div className='col-md-4' key={product.id}>
-                                <Link to={`/product/${product.id}`}>
-                                    <div className='card P-4'>
-                                        <img src={product.image} alt={product.title} />
-                                        <h4>{product.title}</h4>
+            <div className='container'>
+                <div className='row'>
+                    {
+                        products && products.length > 0 ? (
+                            products.map((item, index) => (
+                                <div className='col-md-3 mt-4'>
+                                    <div className='card p-2'>
+                                        <Link to={`/product/${item.id}`}>
+                                            <img src={item.image} alt={item.title}
+                                                style={{ height: "250px", width: '200px' }}
+                                            />
+                                            <h5>{item.title}</h5>
+                                            <h6>{item.price}</h6>
+                                        </Link>
                                     </div>
-                                </Link>
-                            </div>
-                        ))}
-                    </div>
-                ) : (<p>No data found</p>)
-            }
+                                </div>
+                            ))
+                        ) : <p>Loading...</p>
+                    }
+                </div>
+            </div>
         </div>
     )
 }
