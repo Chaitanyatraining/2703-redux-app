@@ -1,18 +1,24 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
+import { fetchProducts } from '../redux/ProductSlice'
+import { useDispatch, useSelector } from 'react-redux'
 
 const Products = () => {
-    const [products, setProducts] = useState([])
+    const dispatch = useDispatch()
+
+    const products = useSelector(state => state.products.data)
+    console.log(products)
 
     useEffect(() => {
-        getProductsData()
+        // getProductsData()
+        dispatch(fetchProducts())
     }, [])
 
-    const getProductsData = async () => {
-        const { data } = await axios.get('https://fakestoreapi.com/products')
-        setProducts(data)
-    }
+    // const getProductsData = async () => {
+    //     const { data } = await axios.get('https://fakestoreapi.com/products')
+    //     setProducts(data)
+    // }
 
 
     return (
